@@ -32,9 +32,7 @@ object RunnerService extends SPService {
     )
   )
 
-  val transformTuple  = (
-    TransformValue("SOP", _.getAs[ID]("SOP"))
-    )
+  val transformTuple  = TransformValue("SOP", _.getAs[ID]("SOP"))
   val transformation = List(transformTuple)
   //def props(eventHandler: ActorRef) = Props(classOf[RunnerService], eventHandler)
   def props(eventHandler: ActorRef, operationController: String) =
@@ -79,7 +77,7 @@ class RunnerService(eventHandler: ActorRef, operationController: String) extends
 
 
     }
-      // Vi får states från Operation control
+    // Vi får states från Operation control
     case r @ Response(ids, attr, service, _) if service == operationController => {
       // Till att börja med är dessa tomma, så vi säger att alla som kör blir färdiga
 
@@ -144,6 +142,7 @@ class RunnerService(eventHandler: ActorRef, operationController: String) extends
         false
       }
       case Some(p: Sequence) => {
+
         // plocka nästa ur sekvensen och kör -> execute(nextSOP)
         // uppdatera activeSteps
         // om det var sista steget -> stepCompleted(p)
